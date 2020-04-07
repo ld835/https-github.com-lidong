@@ -1,0 +1,11 @@
+arr = input("")
+num = [int(n) for n in arr.split()]    
+sum = 0
+sum1 =  0
+for i in range(1,len(num)):
+    sum+=num[i]
+    if sum<0:
+        sum=0
+    else:
+        sum1=max(sum,sum1)        
+print (sum1)
