@@ -1,0 +1,182 @@
+#include <iostream>
+using namespace std;
+#define CLASS_COUNT 4
+#define CLASS_STUDENT_COUNT 40
+
+int cj[CLASS_COUNT][CLASS_STUDENT_COUNT];
+
+int SelectFunc();
+int SelectClass();
+int SelectStudent();
+void TotalScore(int classNumber);
+void FindScore(int classNumber, int studentNumber);
+void OutputScore(int classNumber);
+void ClearScore(int classNumber);
+void InputScore(int classNumber);
+
+int main(int argc, char* argv[])
+{
+   int selected;
+ do
+   {
+       selected = SelectFunc();
+       if(selected==0)
+        break;
+
+     switch(selected)
+    {
+    
+        case 1:
+        {
+            int classNumber=SelectClass();
+            InputScore(classNumber);
+            break;
+        }
+        case 2:
+        {
+            int classNumber=SelectClass();
+            ClearScore(classNumber);
+            break;
+        }
+        case 3:
+        {
+            int classNumber=SelectClass();
+            OutputScore(classNumber);
+            break;
+        }
+        case 4:
+        {
+            int classNumber=SelectClass();
+            int studentNumber=SelectStudent();
+            FindScore(classNumber,studentNumber);
+            break;
+        }
+        case 5:
+        {
+            int classNumber=SelectClass();
+            TotalScore(classNumber);
+            break;
+        }
+   }
+       
+}
+while(true);
+return 0;
+}
+
+int SelectFunc()
+{
+int selected;
+do
+{
+    cout<<"请选择：(0~5)"<<endl;
+    cout<<"<<<1、录入成绩"<<endl
+    <<"<<<2、清空成绩"<<endl
+    <<"<<<3、输出成绩"<<endl
+    <<"<<<4、查询成绩"<<endl
+    <<"<<<5、统计成绩"<<endl
+    <<"<<<0、退出"<<endl<<"请输入你的选择:";
+    cin>>selected;
+}
+while(selected<0||selected>5);
+return selected;
+}
+int SelectClass()
+{
+    int classNumber;
+    do
+    {
+    cout<<"请输入班级编号：(1~4)";
+    cin>>classNumber;
+    }
+    while(classNumber<1||classNumber>CLASS_COUNT);
+    return classNumber -1;
+
+}
+int SelectStudent()
+{
+    int studentNumber;
+    do
+    do
+    {
+        cout<<"请输入学生编号：(1~40)";
+        cin>>studentNumber;
+    }
+    while(studentNumber<1||studentNumber>CLASS_STUDENT_COUNT);
+    return studentNumber-1;
+}
+void InputScore(int classNumber)
+{
+    if(classNumber<0||classNumber>=CLASS_COUNT) return;
+ cout<<"请输入"<<classNumber+1<<"班的学生成绩。"<<endl;
+    cout<<"输入-1表示结束。"<<endl;
+    for(int i=0;i<CLASS_STUDENT_COUNT;i++)
+    {
+        cout<<"请输入"<<i+1<<"号学员成绩：";
+        cin>>cj[classNumber][i];
+        
+        if(-1==cj[classNumber][i])break;
+    }
+}
+void ClearScore(int classNumber)
+{
+    if(classNumber<0||classNumber>=CLASS_COUNT)
+    return;
+    for(int i=0;i<CLASS_STUDENT_COUNT;i++)
+    {
+        cj[classNumber][i]=0;
+    }
+    cout<<classNumber+1<<"班学生成绩清空完毕"<<endl;
+}
+void OutputScore(int classNumber)
+{
+    if(classNumber<0||classNumber>=CLASS_COUNT)
+    return;
+    cout<<"============================"<<endl;
+    cout<<classNumber+1<<"班成绩"<<endl;
+
+    for(int i=0;i<CLASS_STUDENT_COUNT;i++)
+{
+    if(i%5==0)
+     cout<<endl;
+    if(-1==cj[classNumber][i])
+    break;
+    cout<<cj[classNumber][i]<<",";
+}
+cout<<"============================"<<endl;
+}
+
+void FindScore(int classNumber,int studentNumber)
+{
+    if(classNumber<0||classNumber>=CLASS_COUNT)
+    return;
+    if(studentNumber<0||studentNumber>=CLASS_STUDENT_COUNT)
+    return;
+    cout<<classNumber+1<<"班，"<<studentNumber+1<<"号成绩："<<
+    cj[classNumber][studentNumber]<<endl;
+}
+void TotalScore(int classNumber)
+{
+    if(classNumber<0||classNumber>=CLASS_COUNT)
+ return;
+    int totalScore=0;//总分
+    int scoreCount=0;//个数
+    for(int i=0;i<CLASS_STUDENT_COUNT;i++)
+    {
+        if(cj[classNumber][i]!=-1)
+        {
+            totalScore+=cj[classNumber][i];
+            scoreCount++;
+        }
+        else
+        {
+            break;
+    }
+}
+if(scoreCount==0)
+    {
+        cout<<"该班学员个数为0"<<endl;
+        return;
+    }
+    cout<<"总分："<<totalScore<<"平均："<<totalScore/scoreCount<<endl;
+}
